@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Category
+{% endblock title %}
+
+
+{% block content %}
+    <h2>Do you want to subscribe to category {{ category.name }}?</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Subscribe">
+    </form>
+{% endblock content %}

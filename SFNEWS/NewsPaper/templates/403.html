@@ -1,0 +1,7 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+<h2>Oops! Looks like you dont have permission to do that!</h2>
+<h5>(This page overrides the error 403 Forbidden page)</h5>
+<a href="{% url 'posts' %}"><h3>Return to main page</h3></a>
+{% endblock content %}

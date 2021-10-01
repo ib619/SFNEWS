@@ -1,0 +1,24 @@
+{% extends "flatpages/default.html" %}
+
+{% block content %}
+<h2>{{request.user.username}} INFO PAGE</h2>
+<hr>
+<h4>My subscriptions:</h4>
+<table>
+{% for category in subscriptions %}
+    <tr>
+        <td><p>{{ category.name }}</p></td>
+        <td><a href="{% url 'category_unsub' category.id %}">Unsubscribe</a></td>
+    </tr>
+{% endfor %}
+</table>
+<hr>
+{% if is_not_author %}
+<button> <a href="{% url 'upgrade' %}"> Become an Author!</a> </button>
+{% else %}
+<div>Congratulations, you are already an author! You can create your own posts!</div>
+<button> <a href="{% url 'post_create' %}">Create Post!</a> </button>
+<hr>
+{% endif %}
+<button> <a href="{% url 'logout' %}">Logout</a> </button>
+{% endblock %}
