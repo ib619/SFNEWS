@@ -9,5 +9,6 @@
     <h2>{{ post.name }}</h2>
     <h5>Hello, {{ sub_name }}! New post in your favourite category!</h5>
     <p>{{ post.text | truncatechars:50 }} </p>
+    <h6>Read full article via this <a href="{% url 'post_detail' post.id %}">link</a>.</h6>
 </body>
 </html>
