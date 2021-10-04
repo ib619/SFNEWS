@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # ... include the providers you want to enable:
     'allauth.socialaccount.providers.google',
+
+    'django_apscheduler',
 ]
 
 SITE_ID = 1
@@ -163,3 +165,7 @@ EMAIL_HOST_PASSWORD = 'wpslliqfaykbsicb'
 EMAIL_USE_SSL = True
 
 DEFAULT_FROM_EMAIL = 'igorbodnarprog@yandex.ru'
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+
+APSCHEDULER_RUN_NOW_TIMEOUT = 25

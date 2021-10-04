@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category
+from .models import Post, Category, Author
 
 from django.views import View
 from django.core.paginator import Paginator
@@ -18,7 +18,7 @@ class PostList(ListView):
     template_name = 'posts.html'
     context_object_name = 'posts'
     ordering = ['-id']
-    paginate_by = 4
+    paginate_by = 10
 
 
 class PostDetail(DetailView):
@@ -42,6 +42,10 @@ class PostCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     def post(self, request):
         super(PostCreateView, self).post(request)
         post = self.object
+        user = request.user
+        author = Author.objects.get(user=user)
+        post.author = author
+        post.save()
         cats = post.category.all()
         for cat in cats:
             subs = cat.subscribers.all()
@@ -61,7 +65,7 @@ class PostCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
                 )
 
                 msg.attach_alternative(html_content, "text/html")
-                msg.send()
+                msg.send(fail_silently=True)
 
         return redirect('posts')
 
