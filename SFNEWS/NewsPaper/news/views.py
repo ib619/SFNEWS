@@ -12,6 +12,7 @@ from django.shortcuts import render, redirect
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+from .tasks import send_notification
 
 class PostList(ListView):
     model = Post
@@ -46,26 +47,8 @@ class PostCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
         author = Author.objects.get(user=user)
         post.author = author
         post.save()
-        cats = post.category.all()
-        for cat in cats:
-            subs = cat.subscribers.all()
-            for sub in subs:
-                html_content = render_to_string(
-                    'post_create_mail.html',
-                    {
-                        'post': post,
-                        'sub_name': sub.username,
-                    }
-                )
-                msg = EmailMultiAlternatives(
-                    subject=f'{post.name}',
-                    body=f'Hello, {sub.username}. New post in your favourite category!',
-                    from_email='igorbodnarprog@yandex.ru',
-                    to=[sub.email],
-                )
 
-                msg.attach_alternative(html_content, "text/html")
-                msg.send(fail_silently=True)
+        send_notification.delay(post.pk)
 
         return redirect('posts')
 

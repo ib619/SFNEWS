@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h4>Hello, {{ sub_name }}! These are the posts you missed last week!</h4>
+<table>
+{% for post in posts %}
+    <tr>
+        <td><p>{{ post.name }}</p></td>
+        <td><a href="{% url 'post_detail' post.id %}">Read</a></td>
+    </tr>
+{% endfor %}
+</table>
+<h6>Thank you for using SFNews!</h6>
+<h6>This mail was sent using celery beat.</h6>
+</body>
