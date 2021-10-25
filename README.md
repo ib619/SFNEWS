@@ -7,3 +7,8 @@ User в подпищиках.
 Проблема в том что сигнал post_save не может работать со связями ManyToMany, поэтому рассылка была
 реализована перегрузкой метода post у PostCreateView. Поэтому в данной работе мне не удалось
 продемонстрировать применение сигналов, несмотря на то, что тема была мной изучена.
+
+# D7.5
+
+* Implemented mailing after addition of the new post
+* Implemented weekly mailing

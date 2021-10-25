@@ -12,6 +12,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'weekly_mail': {
         'task': 'news.tasks.latest_news',
-        'schedule': crontab(minute='*/2'),
+        'schedule': crontab(hour=8, minute=0, day_of_week='monday'),
     },
 }
