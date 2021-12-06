@@ -8,7 +8,6 @@ User в подпищиках.
 реализована перегрузкой метода post у PostCreateView. Поэтому в данной работе мне не удалось
 продемонстрировать применение сигналов, несмотря на то, что тема была мной изучена.
 
-# D7.5
+# D13.4
 
-* Implemented mailing after addition of the new post
-* Implemented weekly mailing
+* Все настройки логирования выполнены в settings.py
