@@ -9,8 +9,7 @@ from .forms import PostForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render, redirect
 
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
+from django.core.cache import cache
 
 from .tasks import send_notification
 
@@ -26,11 +25,22 @@ class PostDetail(DetailView):
     model = Post
     template_name = 'post.html'
     context_object_name = 'post'
+    queryset = Post.objects.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['post_categories'] = self.object.category.all()
         return context
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'post-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            id = self.kwargs.get('pk')
+            obj = Post.objects.get(pk=id)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+
+        return obj
 
 
 class PostCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
